@@ -2,6 +2,14 @@
 
 This is a Global Renewable Electricity Dashboard that visualizes renewable electricity data from Our World in Data (OWID). The application provides interactive maps, country analytics, and comprehensive global renewable energy statistics through a modern web interface. Users can explore renewable electricity shares by country, view global trends, and analyze regional performance with interactive visualizations.
 
+## Deployment Status
+✅ **Ready for Static Hosting** - Configured for Netlify/Cloudflare deployment
+- Base directory: `client`
+- Build command: `npm run build` (or leave empty)
+- Publish directory: `dist`
+- Tailwind CSS optimized for production with comprehensive safelist
+- All styling issues resolved for deployment environments
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
