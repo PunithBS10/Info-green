@@ -3,25 +3,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* NETLIFY DEPLOYMENT FIX - Force Critical CSS Classes */
-@layer components {
-  /* Force inclusion of essential UI classes to prevent purging on Netlify */
-  .force-deployment-classes {
-    /* Base colors - ensure inclusion */
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
-    /* Interactive states */
-    @apply hover:bg-gray-100 dark:hover:bg-gray-800;
-    /* Border and shadow */
-    @apply border-gray-200 dark:border-gray-700 shadow-md;
-    /* Utility classes that might get purged */
-    @apply rounded-md z-50 overflow-hidden;
+/* CSS VARIABLE FALLBACK SYSTEM - Works in both dev and production */
+@layer utilities {
+  /* Target select content with CSS attribute selector */
+  .select-content {
+    /* CSS variables work in dev, fallback works in production */
+    background: hsl(var(--popover, 0 0% 100%)) !important;
+    color: hsl(var(--popover-foreground, 224 71.4% 4.1%)) !important;
   }
   
-  /* Ensure popover and other variable-based classes are included */
-  .force-bg-popover { background-color: hsl(var(--popover)) !important; }
-  .force-text-popover-foreground { color: hsl(var(--popover-foreground)) !important; }
-  .force-bg-background { background-color: hsl(var(--background)) !important; }
-  .force-text-foreground { color: hsl(var(--foreground)) !important; }
+  .dark .select-content {
+    background: hsl(var(--popover, 224 71.4% 4.1%)) !important; 
+    color: hsl(var(--popover-foreground, 210 20% 98%)) !important;
+  }
+}
+
+@layer components {
+  /* Force include critical classes for deployment */
+  .deployment-safeguard {
+    @apply bg-popover text-popover-foreground bg-background text-foreground;
+    @apply bg-card text-card-foreground bg-accent text-accent-foreground;
+    @apply border-border shadow-md rounded-md z-50;
+  }
 }
 
 :root {
