@@ -3,25 +3,6 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
-  safelist: [
-    // Essential Shadcn UI component classes
-    'bg-background', 'text-foreground', 'bg-card', 'text-card-foreground', 
-    'bg-popover', 'text-popover-foreground', 'bg-primary', 'text-primary-foreground',
-    'bg-secondary', 'text-secondary-foreground', 'bg-muted', 'text-muted-foreground',
-    'bg-accent', 'text-accent-foreground', 'border-border',
-    // Custom green theme classes
-    'text-green-primary', 'bg-green-primary', 'bg-green-light',
-    // Color variants used in KPI cards
-    'bg-green-50', 'bg-green-500', 'bg-green-600', 'bg-green-900',
-    'bg-blue-50', 'bg-blue-900', 'bg-gray-50', 'bg-gray-900',
-    'text-green-400', 'text-green-500', 'text-green-600',
-    'text-blue-400', 'text-blue-600', 'text-orange-400', 'text-orange-600',
-    // Dark mode variants
-    'dark:bg-background', 'dark:text-foreground', 'dark:bg-card',
-    'dark:bg-popover', 'dark:bg-secondary', 'dark:bg-muted', 'dark:bg-accent',
-    'dark:bg-green-900', 'dark:bg-blue-900', 'dark:bg-gray-900',
-    'dark:text-green-400', 'dark:text-blue-400',
-  ],
   theme: {
     extend: {
       borderRadius: {
@@ -30,57 +11,57 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
         chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
+          "1": "var(--chart-1)",
+          "2": "var(--chart-2)",
+          "3": "var(--chart-3)",
+          "4": "var(--chart-4)",
+          "5": "var(--chart-5)",
         },
         success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
         },
         warning: {
-          DEFAULT: "hsl(var(--warning))",
-          foreground: "hsl(var(--warning-foreground))",
+          DEFAULT: "var(--warning)",
+          foreground: "var(--warning-foreground)",
         },
         info: {
-          DEFAULT: "hsl(var(--info))",
-          foreground: "hsl(var(--info-foreground))",
+          DEFAULT: "var(--info)",
+          foreground: "var(--info-foreground)",
         },
       },
       fontFamily: {

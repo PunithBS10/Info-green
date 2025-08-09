@@ -3,8 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(210 25% 7.8431%);
@@ -108,14 +106,14 @@
 
 @layer utilities {
   .text-green-primary {
-    color: hsl(var(--green-500));
+    color: var(--green-500);
   }
   
   .bg-green-primary {
-    background-color: hsl(var(--green-500));
+    background-color: var(--green-500);
   }
   
   .bg-green-light {
-    background-color: hsl(var(--green-50));
+    background-color: var(--green-50);
   }
 }

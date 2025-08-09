@@ -174,12 +174,12 @@ export default function GlobalOverview() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-green-500">
+                        <p className="font-semibold text-primary">
                           {region.average.toFixed(1)}%
                         </p>
                         <div className="w-20 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-1">
                           <div 
-                            className="bg-green-500 h-2 rounded-full transition-all" 
+                            className="bg-primary h-2 rounded-full transition-all" 
                             style={{ width: `${Math.min(region.average, 100)}%` }}
                           />
                         </div>
