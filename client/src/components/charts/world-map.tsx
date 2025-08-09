@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { ProcessedCountryData } from '@/types/renewable-data';
+import { mapOWIDToGeoName } from '@/utils/country-mapping';
 
 interface WorldMapProps {
   data: ProcessedCountryData[];
@@ -37,22 +38,35 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
 
         chartInstance.current = echarts.init(chartRef.current);
 
-        // Prepare data for map
+        // Prepare data for map with country name mapping
         const mapData = data
           .filter(d => d && d.latestValue !== null && d.latestValue !== undefined && d.country)
-          .map(d => ({
-            name: d.country,
-            value: d.latestValue,
-            year: d.latestYear || 2023,
-            rank: d.rank || 0
-          }));
+          .map(d => {
+            const mappedName = mapOWIDToGeoName(d.country);
+            
+            // Log if country name was mapped (for debugging)
+            if (mappedName !== d.country) {
+              console.log(`Country mapped: "${d.country}" → "${mappedName}"`);
+            }
+            
+            return {
+              name: mappedName, // Map OWID names to GeoJSON names
+              value: d.latestValue,
+              year: d.latestYear || 2023,
+              rank: d.rank || 0,
+              originalName: d.country // Keep original name for tooltip
+            };
+          });
+
+        console.log(`Preparing map data for ${mapData.length} countries with renewable data`);
 
         const option = {
           tooltip: {
             trigger: 'item',
             formatter: function(params: any) {
               if (params.data && params.data.value !== undefined) {
-                return `${params.name}<br/>Renewable: ${params.data.value?.toFixed(1)}%<br/>Year: ${params.data.year}<br/>Global Rank: #${params.data.rank}`;
+                const displayName = params.data.originalName || params.name;
+                return `${displayName}<br/>Renewable: ${params.data.value?.toFixed(1)}%<br/>Year: ${params.data.year}<br/>Global Rank: #${params.data.rank}`;
               }
               return `${params.name}<br/>No data available`;
             }
