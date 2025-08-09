@@ -32,23 +32,20 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
         const geoCountries = worldGeoJson.features?.map((feature: any) => feature.properties?.NAME || feature.properties?.name).filter(Boolean) || [];
         console.log('Available countries in GeoJSON:', geoCountries.sort());
         
-        // Find US variations in GeoJSON
-        const usVariations = geoCountries.filter(c => c.toLowerCase().includes('united') || c.toLowerCase().includes('america') || c.toLowerCase().includes('usa'));
-        console.log('US variations in GeoJSON:', usVariations);
-        
-        // Find UK variations in GeoJSON  
-        const ukVariations = geoCountries.filter(c => c.toLowerCase().includes('england') || c.toLowerCase().includes('kingdom') || c.toLowerCase().includes('britain'));
-        console.log('UK variations in GeoJSON:', ukVariations);
+        // Verify key country mappings are working
+        const hasUSA = geoCountries.includes('USA');
+        const hasEngland = geoCountries.includes('England');
+        console.log('Key countries found in GeoJSON:', { USA: hasUSA, England: hasEngland });
         
         // Log OWID countries to compare  
         const owidCountries = data.map(d => d.country).sort();
         console.log('OWID countries:', owidCountries.slice(0, 20)); // Show first 20
         
         // Check if USA/UK exist in OWID data
-        const hasUSA = owidCountries.find(c => c.toLowerCase().includes('united states') || c === 'USA');
-        const hasUK = owidCountries.find(c => c.toLowerCase().includes('united kingdom') || c === 'UK');
-        console.log('USA variant in OWID:', hasUSA);
-        console.log('UK variant in OWID:', hasUK);
+        const hasUSAInOWID = owidCountries.find(c => c.toLowerCase().includes('united states') || c === 'USA');
+        const hasUKInOWID = owidCountries.find(c => c.toLowerCase().includes('united kingdom') || c === 'UK');
+        console.log('USA variant in OWID:', hasUSAInOWID);
+        console.log('UK variant in OWID:', hasUKInOWID);
         
         // Register the world map
         echarts.registerMap('world', worldGeoJson);
