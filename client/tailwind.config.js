@@ -30,9 +30,14 @@ export default {
     // Color variants for KPI cards and components
     'text-green-600', 'text-green-500', 'text-green-400', 'text-blue-600', 'text-blue-400', 'text-orange-600', 'text-orange-400',
     'text-red-600', 'text-red-400', 'text-yellow-600', 'text-yellow-400', 'text-purple-600', 'text-purple-400',
-    'bg-green-50', 'bg-green-100', 'bg-green-500', 'bg-green-600', 'bg-green-950/20', 'bg-blue-50', 'bg-blue-100', 'bg-blue-950/20',
-    'bg-orange-50', 'bg-orange-100', 'bg-orange-950/20', 'bg-red-50', 'bg-red-100', 'bg-red-950/20',
-    'bg-yellow-50', 'bg-yellow-100', 'bg-yellow-950/20', 'bg-purple-50', 'bg-purple-100', 'bg-purple-950/20',
+    'bg-green-50', 'bg-green-100', 'bg-green-500', 'bg-green-600', 'bg-green-950/20', 
+    'bg-blue-50', 'bg-blue-100', 'bg-blue-950/20', 'bg-orange-50', 'bg-orange-100', 'bg-orange-950/20', 
+    'bg-red-50', 'bg-red-100', 'bg-red-950/20', 'bg-yellow-50', 'bg-yellow-100', 'bg-yellow-950/20', 
+    'bg-purple-50', 'bg-purple-100', 'bg-purple-950/20', 'bg-gray-50', 'bg-gray-100', 'bg-gray-950/20',
+    // Dark mode variants for all backgrounds
+    'dark:bg-green-50', 'dark:bg-green-100', 'dark:bg-green-500', 'dark:bg-green-600', 'dark:bg-green-950/20',
+    'dark:bg-blue-50', 'dark:bg-blue-100', 'dark:bg-blue-950/20', 'dark:bg-orange-950/20', 
+    'dark:bg-red-950/20', 'dark:bg-yellow-950/20', 'dark:bg-purple-950/20', 'dark:bg-gray-950/20',
     // Border and radius
     'border', 'border-2', 'border-t', 'border-b', 'border-l', 'border-r', 'border-input',
     'rounded', 'rounded-lg', 'rounded-md', 'rounded-sm', 'rounded-full',
