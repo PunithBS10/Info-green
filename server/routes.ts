@@ -88,10 +88,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get all renewable data
       const renewableData = await storage.getAllRenewableData();
       
-      // Find all data points for this country (both OWID name and mapped name)
+      // Debug: Log some sample countries in the database
+      const sampleCountries = [...new Set(renewableData.map(d => d.country))].slice(0, 10);
+      console.log('Sample countries in database:', sampleCountries);
+      
+      // Create reverse mapping to find OWID name from GeoJSON name
+      const geoToOWIDMapping: Record<string, string> = {
+        'USA': 'United States',
+        'England': 'United Kingdom',
+        'Republic of Congo': 'Congo',
+        'Ivory Coast': 'Cote d\'Ivoire',
+        'Democratic Republic of the Congo': 'Democratic Republic of Congo',
+        'Swaziland': 'Eswatini'
+      };
+      
+      // Try to find the OWID country name
+      const owidCountryName = geoToOWIDMapping[countryName] || countryName;
+      
+      // Find all data points for this country (try both names)
       const countryData = renewableData.filter(d => 
         d.country === countryName || 
-        d.country === countryName.replace('USA', 'United States').replace('England', 'United Kingdom')
+        d.country === owidCountryName
       );
       
       if (countryData.length === 0) {
