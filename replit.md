@@ -3,12 +3,25 @@
 This is a Global Renewable Electricity Dashboard that visualizes renewable electricity data from Our World in Data (OWID). The application provides interactive maps, country analytics, and comprehensive global renewable energy statistics through a modern web interface. Users can explore renewable electricity shares by country, view global trends, and analyze regional performance with interactive visualizations.
 
 ## Deployment Status
-✅ **Ready for Static Hosting** - Configured for Netlify/Cloudflare deployment
+✅ **Ready for Static Hosting** - Configured for Vercel, Netlify & Cloudflare deployment
+
+### Vercel Deployment
+- Root directory: `client`
+- Framework preset: Vite
+- Build command: `npm run build`
+- Output directory: `dist`
+- Install command: `npm install`
+- Configuration: `client/vercel.json` with SPA routing support
+
+### Alternative Hosting (Netlify/Cloudflare)
 - Base directory: `client`
-- Build command: `npm run build` (or leave empty)
+- Build command: `npm run build`
 - Publish directory: `dist`
+
+### Technical Details
 - Tailwind CSS optimized for production with comprehensive safelist
 - All styling issues resolved for deployment environments
+- CSS file size: 66KB (optimized)
 
 # User Preferences
 
