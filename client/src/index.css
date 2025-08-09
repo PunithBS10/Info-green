@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(210 25% 7.8431%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(210 25% 7.8431%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(210 25% 7.8431%);
+  --primary: hsl(158 64% 52%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(140 49% 97%);
+  --secondary-foreground: hsl(210 25% 7.8431%);
+  --muted: hsl(210 13% 96%);
+  --muted-foreground: hsl(210 10% 40%);
+  --accent: hsl(140 49% 97%);
+  --accent-foreground: hsl(158 64% 52%);
+  --destructive: hsl(356 90% 54%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(210 13% 91%);
+  --input: hsl(210 13% 96%);
+  --ring: hsl(158 64% 52%);
+  --success: hsl(158 64% 52%);
+  --success-foreground: hsl(0 0% 100%);
+  --warning: hsl(45 93% 47%);
+  --warning-foreground: hsl(0 0% 100%);
+  --info: hsl(204 94% 52%);
+  --info-foreground: hsl(0 0% 100%);
+  --chart-1: hsl(158 64% 52%);
+  --chart-2: hsl(173 64% 52%);
+  --chart-3: hsl(143 64% 52%);
+  --chart-4: hsl(188 64% 52%);
+  --chart-5: hsl(133 64% 52%);
+  --radius: 0.75rem;
+  --font-sans: 'Inter', sans-serif;
+  --green-50: hsl(156 73% 95%);
+  --green-100: hsl(155 55% 88%);
+  --green-500: hsl(158 64% 52%);
+  --green-600: hsl(158 64% 42%);
+  --gray-50: hsl(210 20% 98%);
+  --gray-100: hsl(220 14% 96%);
+  --gray-200: hsl(220 13% 91%);
+  --gray-500: hsl(220 9% 46%);
+  --gray-600: hsl(220 9% 36%);
+  --gray-800: hsl(220 13% 18%);
+  --gray-900: hsl(220 13% 13%);
+}
+
+.dark {
+  --background: hsl(220 13% 9%);
+  --foreground: hsl(210 20% 98%);
+  --card: hsl(220 13% 13%);
+  --card-foreground: hsl(210 20% 98%);
+  --popover: hsl(220 13% 13%);
+  --popover-foreground: hsl(210 20% 98%);
+  --primary: hsl(158 64% 52%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(220 13% 18%);
+  --secondary-foreground: hsl(210 20% 98%);
+  --muted: hsl(220 13% 18%);
+  --muted-foreground: hsl(220 9% 60%);
+  --accent: hsl(220 13% 18%);
+  --accent-foreground: hsl(158 64% 52%);
+  --destructive: hsl(356 90% 54%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --border: hsl(220 13% 18%);
+  --input: hsl(220 13% 18%);
+  --ring: hsl(158 64% 52%);
+  --success: hsl(158 64% 52%);
+  --success-foreground: hsl(0 0% 100%);
+  --warning: hsl(45 93% 47%);
+  --warning-foreground: hsl(0 0% 100%);
+  --info: hsl(204 94% 52%);
+  --info-foreground: hsl(0 0% 100%);
+  --green-50: hsl(220 13% 18%);
+  --green-100: hsl(220 13% 22%);
+  --green-500: hsl(158 64% 52%);
+  --green-600: hsl(158 64% 42%);
+  --gray-50: hsl(220 13% 18%);
+  --gray-100: hsl(220 13% 22%);
+  --gray-200: hsl(220 13% 28%);
+  --gray-500: hsl(220 9% 46%);
+  --gray-600: hsl(220 9% 60%);
+  --gray-800: hsl(210 20% 85%);
+  --gray-900: hsl(210 20% 98%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-secondary text-foreground font-sans antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+}
+
+@layer utilities {
+  .text-green-primary {
+    color: var(--green-500);
+  }
+  
+  .bg-green-primary {
+    background-color: var(--green-500);
+  }
+  
+  .bg-green-light {
+    background-color: var(--green-50);
+  }
+}
