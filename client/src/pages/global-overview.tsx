@@ -37,6 +37,9 @@ export default function GlobalOverview() {
   }, [processedData]);
 
   const handleRefresh = () => {
+    // Force a fresh data fetch that will save to database
+    localStorage.removeItem('renewable_data_cache');
+    localStorage.removeItem('renewable_data_cache_timestamp');
     refetch();
   };
 

@@ -120,7 +120,37 @@ export class RenewableDataService {
       console.log('CSV text length:', csvText.length);
       const data = this.parseCSV(csvText);
       console.log('Parsed data:', data.length, 'records');
+      
+      // Save to localStorage cache
       DataCache.setRenewableData(data);
+      
+      // Also save to backend database
+      try {
+        console.log('Saving data to backend database...');
+        const response = await fetch('/api/renewable-data/import', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data.map(d => ({
+            country: d.country,
+            countryCode: d.countryCode || null,
+            year: d.year,
+            renewableShare: d.renewableShare,
+            region: d.region || null,
+            lastUpdated: new Date().toISOString()
+          })))
+        });
+        
+        if (response.ok) {
+          console.log('Data successfully saved to backend database');
+        } else {
+          console.warn('Failed to save to backend database:', response.statusText);
+        }
+      } catch (error) {
+        console.warn('Error saving to backend database:', error);
+      }
+      
       return data;
     } catch (error) {
       console.error('Error fetching renewable data:', error);
