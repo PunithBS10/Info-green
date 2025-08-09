@@ -29,7 +29,6 @@ export const COUNTRY_NAME_MAPPING: Record<string, string> = {
   'Burma': 'Myanmar',
   'Cape Verde': 'Cape Verde',
   'Gambia': 'Gambia', // GeoJSON uses 'Gambia'
-  'Bahamas': 'Bahamas', // GeoJSON uses 'Bahamas'
   'Vatican': 'Vatican',
   'Micronesia (country)': 'Micronesia',
   'Palestine': 'Palestine',
@@ -42,12 +41,22 @@ export const COUNTRY_NAME_MAPPING: Record<string, string> = {
   'Slovakia': 'Slovakia',
   'Bosnia and Herzegovina': 'Bosnia and Herzegovina',
   
-  // Additional common variations
+  // Additional common variations - these are the key missing mappings
   'USA': 'United States of America',
   'UK': 'United Kingdom',
-  'UAE': 'United Arab Emirates',
+  'UAE': 'United Arab Emirates',  
   'DRC': 'Democratic Republic of the Congo',
-  'CAR': 'Central African Republic'
+  'CAR': 'Central African Republic',
+  
+  // Small island nations and territories that appear in OWID but not GeoJSON
+  'Bahrain': 'Bahrain',
+  'Barbados': 'Barbados',
+  'Cayman Islands': 'Cayman Islands',
+  'Bermuda': 'Bermuda',
+  'British Virgin Islands': 'British Virgin Islands',
+  'American Samoa': 'American Samoa',
+  'Antigua and Barbuda': 'Antigua and Barbuda',
+  'Aruba': 'Aruba'
 };
 
 // Reverse mapping for flexibility

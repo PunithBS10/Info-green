@@ -32,9 +32,15 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
         const geoCountries = worldGeoJson.features?.map((feature: any) => feature.properties?.NAME || feature.properties?.name).filter(Boolean) || [];
         console.log('Available countries in GeoJSON:', geoCountries.sort());
         
-        // Log OWID countries to compare
+        // Log OWID countries to compare  
         const owidCountries = data.map(d => d.country).sort();
         console.log('OWID countries:', owidCountries.slice(0, 20)); // Show first 20
+        
+        // Check if USA/UK exist in OWID data
+        const hasUSA = owidCountries.find(c => c.toLowerCase().includes('united states') || c === 'USA');
+        const hasUK = owidCountries.find(c => c.toLowerCase().includes('united kingdom') || c === 'UK');
+        console.log('USA variant in OWID:', hasUSA);
+        console.log('UK variant in OWID:', hasUK);
         
         // Register the world map
         echarts.registerMap('world', worldGeoJson);
