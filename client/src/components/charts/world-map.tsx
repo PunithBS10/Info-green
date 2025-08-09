@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { ProcessedCountryData } from '../../types/renewable-data';
+import { useEffect, useRef } from 'react';
+import type { ProcessedCountryData } from '@/types/renewable-data';
 
 interface WorldMapProps {
   data: ProcessedCountryData[];
@@ -27,51 +27,76 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
 
     chartInstance.current = echarts.init(chartRef.current);
 
-    // Prepare data for map
-    const mapData = data
-      .filter(d => d.latestValue !== null)
-      .map(d => ({
-        name: d.country,
-        value: d.latestValue,
-        year: d.latestYear,
-        rank: d.rank || 0
-      }));
+    // Create a top countries bar chart instead of world map
+    const sortedData = data
+      .filter(d => d && d.latestValue !== null && d.latestValue !== undefined && d.country)
+      .sort((a, b) => (b.latestValue || 0) - (a.latestValue || 0))
+      .slice(0, 20); // Top 20 countries
 
     const option = {
-      tooltip: {
-        trigger: 'item',
-        formatter: function(params: any) {
-          if (params.data) {
-            return `${params.name}<br/>Renewable: ${params.data.value?.toFixed(1) || '—'}%<br/>Year: ${params.data.year}<br/>Rank: #${params.data.rank}`;
-          }
-          return `${params.name}<br/>No data available`;
+      title: {
+        text: 'Top 20 Countries by Renewable Electricity Share',
+        left: 'center',
+        top: '5%',
+        textStyle: {
+          fontSize: 16,
+          fontWeight: 'normal',
+          color: '#374151'
         }
       },
-      visualMap: {
-        min: 0,
+      tooltip: {
+        trigger: 'axis',
+        formatter: function(params: any) {
+          if (params && params.length > 0) {
+            const data = params[0];
+            return `${data.axisValue}<br/>Renewable: ${data.value?.toFixed(1) || '—'}%`;
+          }
+          return 'No data available';
+        }
+      },
+      grid: {
+        left: '20%',
+        right: '10%',
+        top: '20%',
+        bottom: '10%'
+      },
+      xAxis: {
+        type: 'value',
         max: 100,
-        left: 'left',
-        top: 'bottom',
-        text: ['High', 'Low'],
-        calculable: true,
-        inRange: {
-          color: ['#fee2e2', '#fef3c7', '#d1fae5', '#a7f3d0', '#10b981']
+        axisLabel: {
+          formatter: '{value}%',
+          color: '#6b7280'
         },
-        textStyle: {
-          color: '#666'
+        axisLine: {
+          lineStyle: { color: '#e5e7eb' }
+        }
+      },
+      yAxis: {
+        type: 'category',
+        data: sortedData.map(d => d.country),
+        axisLabel: {
+          fontSize: 11,
+          color: '#6b7280'
+        },
+        axisLine: {
+          lineStyle: { color: '#e5e7eb' }
         }
       },
       series: [{
         name: 'Renewable Electricity %',
-        type: 'map',
-        map: 'world',
-        roam: true,
-        data: mapData,
-        emphasis: {
-          label: {
-            show: false
+        type: 'bar',
+        data: sortedData.map(d => d.latestValue),
+        itemStyle: {
+          color: function(params: any) {
+            const value = params.value;
+            if (value >= 80) return '#059669';
+            if (value >= 60) return '#10b981';
+            if (value >= 40) return '#34d399';
+            if (value >= 20) return '#6ee7b7';
+            return '#a7f3d0';
           }
-        }
+        },
+        barMaxWidth: 20
       }]
     };
 
@@ -96,28 +121,11 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
 
   if (isLoading) {
     return (
-      <div className="h-96 w-full bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse flex items-center justify-center">
-        <div className="text-gray-500 dark:text-gray-400">Loading world map...</div>
+      <div className="h-[400px] flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg">
+        <div className="text-muted-foreground">Loading chart...</div>
       </div>
     );
   }
 
-  return (
-    <div className="w-full">
-      <div ref={chartRef} className="h-96 w-full" />
-      
-      {/* Map Legend */}
-      <div className="flex items-center justify-center mt-4 space-x-4">
-        <span className="text-xs text-gray-500 dark:text-gray-400">0%</span>
-        <div className="flex space-x-1">
-          <div className="w-4 h-3 bg-red-100"></div>
-          <div className="w-4 h-3 bg-yellow-100"></div>
-          <div className="w-4 h-3 bg-green-100"></div>
-          <div className="w-4 h-3 bg-green-300"></div>
-          <div className="w-4 h-3 bg-primary"></div>
-        </div>
-        <span className="text-xs text-gray-500 dark:text-gray-400">100%</span>
-      </div>
-    </div>
-  );
+  return <div ref={chartRef} className="h-[400px] w-full" />;
 }

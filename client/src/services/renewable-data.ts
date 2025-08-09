@@ -57,19 +57,27 @@ export class RenewableDataService {
         
         const year = parseInt(yearStr);
         
-        if (country && !isNaN(year) && country !== 'World' && !country.includes('(')) {
+        // Filter to only real countries and exclude aggregated regions
+        if (country && !isNaN(year) && year >= 1990 && year <= 2025 && 
+            country !== 'World' && !country.includes('(') && !country.includes('Ember') &&
+            isoCode && isoCode.length === 3) {
           const renewableShare = renewableShareStr === '' || renewableShareStr === 'null' 
             ? null 
             : parseFloat(renewableShareStr);
           
-          if (renewableShare === null || (!isNaN(renewableShare) && renewableShare >= 0 && renewableShare <= 100)) {
-            data.push({
-              country,
-              countryCode: isoCode || undefined,
-              year,
-              renewableShare,
-              region: this.getRegionForCountry(country)
-            });
+          if (renewableShare !== null && !isNaN(renewableShare) && renewableShare >= 0 && renewableShare <= 100) {
+            try {
+              const region = this.getRegionForCountry(country);
+              data.push({
+                country,
+                countryCode: isoCode || undefined,
+                year,
+                renewableShare,
+                region
+              });
+            } catch (error) {
+              console.error(`Error processing country ${country}:`, error);
+            }
           }
         }
       }
@@ -122,10 +130,17 @@ export class RenewableDataService {
   }
 
   static processCountryData(data: CountryData[]): ProcessedCountryData[] {
+    if (!data || !Array.isArray(data)) {
+      console.log('Invalid data provided to processCountryData');
+      return [];
+    }
+
     const countryMap = new Map<string, CountryData[]>();
     
-    // Group by country
+    // Group by country with error handling
     data.forEach(item => {
+      if (!item || !item.country) return;
+      
       if (!countryMap.has(item.country)) {
         countryMap.set(item.country, []);
       }
@@ -135,17 +150,20 @@ export class RenewableDataService {
     const processed: ProcessedCountryData[] = [];
 
     countryMap.forEach((countryData, country) => {
+      if (!countryData || countryData.length === 0) return;
+      
       // Sort by year descending to get latest
       const sortedData = countryData
-        .filter(d => d.renewableShare !== null)
+        .filter(d => d && d.renewableShare !== null && typeof d.renewableShare === 'number')
         .sort((a, b) => b.year - a.year);
 
       if (sortedData.length === 0) return;
 
       const latest = sortedData[0];
+      if (!latest) return;
       
       // Calculate growth rate (5-year change)
-      const fiveYearsAgo = sortedData.find(d => d.year <= latest.year - 5);
+      const fiveYearsAgo = sortedData.find(d => d && d.year <= latest.year - 5);
       let growthRate: number | undefined;
       
       if (fiveYearsAgo && fiveYearsAgo.renewableShare !== null && latest.renewableShare !== null) {
@@ -157,19 +175,22 @@ export class RenewableDataService {
         latestYear: latest.year,
         latestValue: latest.renewableShare,
         growthRate,
-        region: latest.region
+        region: latest.region || undefined
       });
     });
 
     // Add rankings
     const ranked = processed
-      .filter(d => d.latestValue !== null)
+      .filter(d => d && d.latestValue !== null && typeof d.latestValue === 'number')
       .sort((a, b) => (b.latestValue || 0) - (a.latestValue || 0));
     
     ranked.forEach((item, index) => {
-      item.rank = index + 1;
+      if (item) {
+        item.rank = index + 1;
+      }
     });
 
+    console.log(`Processed ${processed.length} countries from ${data.length} raw data points`);
     return processed;
   }
 

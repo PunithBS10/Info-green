@@ -14,8 +14,7 @@ import DebugData from "@/pages/debug-data";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={DebugData} />
-      <Route path="/global" component={GlobalOverview} />
+      <Route path="/" component={GlobalOverview} />
       <Route path="/countries" component={Countries} />
       <Route path="/settings" component={Settings} />
       <Route component={NotFound} />
