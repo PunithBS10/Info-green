@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ProcessedCountryData } from '@/types/renewable-data';
 import { mapOWIDToGeoName } from '@/utils/country-mapping';
+import { CountryDetailModal } from '@/components/modals/country-detail-modal';
 
 interface WorldMapProps {
   data: ProcessedCountryData[];
@@ -10,6 +11,8 @@ interface WorldMapProps {
 export function WorldMap({ data, isLoading = false }: WorldMapProps) {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<any>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (!chartRef.current || isLoading || !data || data.length === 0) return;
@@ -146,6 +149,17 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
 
         chartInstance.current.setOption(option);
 
+        // Add click event handler for country selection
+        chartInstance.current.on('click', (params: any) => {
+          if (params.name) {
+            console.log('Country clicked:', params.name);
+            // Use original OWID country name if available, otherwise use the GeoJSON name
+            const countryName = params.data?.originalName || params.name;
+            setSelectedCountry(countryName);
+            setIsModalOpen(true);
+          }
+        });
+
         // Handle resize
         const handleResize = () => {
           if (chartInstance.current) {
@@ -197,6 +211,11 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
   return (
     <div className="w-full">
       <div ref={chartRef} className="h-[400px] w-full" />
+      <CountryDetailModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        countryName={selectedCountry}
+      />
     </div>
   );
 }
