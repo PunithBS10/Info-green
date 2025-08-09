@@ -3,22 +3,12 @@ import { DataCache } from '../lib/cache';
 
 export class RenewableDataService {
   private static async fetchOWIDData(): Promise<string> {
-    // Try to use our proxy endpoint first
-    try {
-      const response = await fetch('/api/owid-proxy');
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.text();
-    } catch (error) {
-      console.warn('Proxy failed, trying direct OWID URL:', error);
-      // Fallback to direct URL
-      const response = await fetch('https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv');
-      if (!response.ok) {
-        throw new Error(`Failed to fetch OWID data: ${response.status}`);
-      }
-      return await response.text();
+    // For static hosting, fetch directly from OWID GitHub
+    const response = await fetch('https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv');
+    if (!response.ok) {
+      throw new Error(`Failed to fetch OWID data: ${response.status}`);
     }
+    return await response.text();
   }
 
   private static parseCSV(csvText: string): CountryData[] {
@@ -121,36 +111,8 @@ export class RenewableDataService {
       const data = this.parseCSV(csvText);
       console.log('Parsed data:', data.length, 'records');
       
-      // Save to localStorage cache
+      // Save to localStorage cache for static hosting
       DataCache.setRenewableData(data);
-      
-      // Also save to backend database
-      try {
-        console.log('Saving data to backend database...');
-        const response = await fetch('/api/renewable-data/import', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data.map(d => ({
-            country: d.country,
-            countryCode: d.countryCode || null,
-            year: d.year,
-            renewableShare: d.renewableShare,
-            region: d.region || null,
-            lastUpdated: new Date().toISOString()
-          })))
-        });
-        
-        if (response.ok) {
-          console.log('Data successfully saved to backend database');
-        } else {
-          console.warn('Failed to save to backend database:', response.statusText);
-        }
-      } catch (error) {
-        console.warn('Error saving to backend database:', error);
-      }
-      
       return data;
     } catch (error) {
       console.error('Error fetching renewable data:', error);
@@ -303,5 +265,84 @@ export class RenewableDataService {
       .filter(d => d.latestValue !== null)
       .sort((a, b) => (a.latestValue || 0) - (b.latestValue || 0))
       .slice(0, count);
+  }
+
+  // Static country detail service for hosting without backend
+  static async getCountryDetail(countryName: string) {
+    try {
+      // Get all renewable data from cache or fetch fresh
+      const allData = await this.fetchData();
+      
+      // Create reverse mapping to find OWID name from GeoJSON name
+      const geoToOWIDMapping: Record<string, string> = {
+        'USA': 'United States',
+        'England': 'United Kingdom',
+        'Republic of Congo': 'Congo',
+        'Ivory Coast': 'Cote d\'Ivoire',
+        'Democratic Republic of the Congo': 'Democratic Republic of Congo',
+        'Swaziland': 'Eswatini'
+      };
+      
+      // Try to find the OWID country name
+      const owidCountryName = geoToOWIDMapping[countryName] || countryName;
+      
+      // Find all data points for this country (try both names)
+      const countryData = allData.filter(d => 
+        d.country === countryName || 
+        d.country === owidCountryName
+      );
+      
+      if (countryData.length === 0) {
+        throw new Error('Country not found');
+      }
+
+      // Sort by year
+      countryData.sort((a, b) => a.year - b.year);
+
+      // Calculate statistics
+      const latestData = countryData[countryData.length - 1];
+      const currentPercentage = latestData?.renewableShare || 0;
+      
+      // Calculate 15-year average (2008-2023)
+      const recentData = countryData.filter(d => d.year >= 2008 && d.year <= 2023);
+      const fifteenYearAverage = recentData.length > 0 
+        ? recentData.reduce((sum, d) => sum + d.renewableShare, 0) / recentData.length 
+        : currentPercentage;
+
+      // Find 2008 baseline for change calculation
+      const baseline2008 = countryData.find(d => d.year === 2008);
+      const changeVs2008 = baseline2008 ? currentPercentage - baseline2008.renewableShare : 0;
+
+      // Prepare trend data for chart (last 15 years)
+      const trendData = countryData
+        .filter(d => d.year >= 2008)
+        .map(d => ({
+          year: d.year,
+          value: d.renewableShare
+        }));
+
+      // Get country info
+      const countryInfo = {
+        countryCode: latestData?.countryCode,
+        region: latestData?.region,
+        dataPoints: countryData.length,
+        yearRange: {
+          start: countryData[0]?.year,
+          end: latestData?.year
+        }
+      };
+
+      return {
+        country: latestData?.country || countryName,
+        currentPercentage: Math.round(currentPercentage * 10) / 10,
+        fifteenYearAverage: Math.round(fifteenYearAverage * 10) / 10,
+        changeVs2008: Math.round(changeVs2008 * 10) / 10,
+        trendData,
+        countryInfo
+      };
+    } catch (error) {
+      console.error(`Error fetching country detail for ${countryName}:`, error);
+      throw error;
+    }
   }
 }

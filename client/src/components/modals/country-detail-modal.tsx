@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 
 import { useQuery } from "@tanstack/react-query";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts';
+import { RenewableDataService } from "../../services/renewable-data";
 
 interface CountryDetailModalProps {
   isOpen: boolean;
@@ -13,21 +14,26 @@ interface CountryDetailModalProps {
 
 interface CountryDetailData {
   country: string;
-  current: number;
-  currentYear: number;
-  average15Year: number;
+  currentPercentage: number;
+  fifteenYearAverage: number;
   changeVs2008: number;
-  rank: number;
-  dataPoints: number;
-  firstYear: number;
-  lastUpdated: number;
   trendData: { year: number; value: number }[];
+  countryInfo: {
+    countryCode?: string;
+    region?: string;
+    dataPoints: number;
+    yearRange: {
+      start?: number;
+      end?: number;
+    };
+  };
 }
 
 export function CountryDetailModal({ isOpen, onClose, countryName }: CountryDetailModalProps) {
-  // Fetch detailed country data
-  const { data: countryDetail, isLoading } = useQuery<CountryDetailData>({
-    queryKey: ['/api/country-detail', countryName],
+  // Fetch detailed country data using static service
+  const { data: countryDetail, isLoading } = useQuery({
+    queryKey: ['country-detail', countryName],
+    queryFn: () => RenewableDataService.getCountryDetail(countryName),
     enabled: isOpen && !!countryName,
   });
 
@@ -62,15 +68,15 @@ export function CountryDetailModal({ isOpen, onClose, countryName }: CountryDeta
               <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg text-center">
                 <div className="text-sm text-muted-foreground mb-1">Current</div>
                 <div className="text-2xl font-bold text-green-600 dark:text-green-400">
-                  {countryDetail.current.toFixed(1)}%
+                  {countryDetail.currentPercentage.toFixed(1)}%
                 </div>
-                <div className="text-xs text-muted-foreground">{countryDetail.currentYear}</div>
+                <div className="text-xs text-muted-foreground">{countryDetail.countryInfo.yearRange.end}</div>
               </div>
               
               <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg text-center">
                 <div className="text-sm text-muted-foreground mb-1">15-Year Avg</div>
                 <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                  {countryDetail.average15Year.toFixed(1)}%
+                  {countryDetail.fifteenYearAverage.toFixed(1)}%
                 </div>
                 <div className="text-xs text-muted-foreground">2008-2023</div>
               </div>
