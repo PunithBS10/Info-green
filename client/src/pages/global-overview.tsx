@@ -174,7 +174,7 @@ export default function GlobalOverview() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-primary">
+                        <p className="font-semibold text-green-500">
                           {region.average.toFixed(1)}%
                         </p>
                         <div className="w-20 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-1">

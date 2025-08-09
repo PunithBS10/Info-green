@@ -135,7 +135,7 @@ export default function Countries() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <span className="text-lg font-semibold text-primary">
+                        <span className="text-lg font-semibold text-green-500">
                           {formatValue(country.latestValue)}
                         </span>
                       </div>
@@ -192,7 +192,7 @@ export default function Countries() {
                             </p>
                           </div>
                         </div>
-                        <span className="font-semibold text-primary">
+                        <span className="font-semibold text-green-500">
                           {formatValue(country.latestValue)}
                         </span>
                       </div>

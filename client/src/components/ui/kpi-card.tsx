@@ -52,7 +52,7 @@ export function KPICard({
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-2">
           <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{label}</p>
-          <Icon className="h-5 w-5 text-primary" />
+          <Icon className="h-5 w-5 text-green-500" />
         </div>
         <div className="flex items-end space-x-2">
           <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">

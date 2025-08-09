@@ -28,9 +28,9 @@ export default {
     'font-normal', 'font-medium', 'font-semibold', 'font-bold', 'font-sans', 'antialiased',
     'text-center', 'text-left', 'text-right', 'leading-relaxed',
     // Color variants for KPI cards and components
-    'text-green-600', 'text-green-400', 'text-blue-600', 'text-blue-400', 'text-orange-600', 'text-orange-400',
+    'text-green-600', 'text-green-500', 'text-green-400', 'text-blue-600', 'text-blue-400', 'text-orange-600', 'text-orange-400',
     'text-red-600', 'text-red-400', 'text-yellow-600', 'text-yellow-400', 'text-purple-600', 'text-purple-400',
-    'bg-green-50', 'bg-green-100', 'bg-green-950/20', 'bg-blue-50', 'bg-blue-100', 'bg-blue-950/20',
+    'bg-green-50', 'bg-green-100', 'bg-green-500', 'bg-green-600', 'bg-green-950/20', 'bg-blue-50', 'bg-blue-100', 'bg-blue-950/20',
     'bg-orange-50', 'bg-orange-100', 'bg-orange-950/20', 'bg-red-50', 'bg-red-100', 'bg-red-950/20',
     'bg-yellow-50', 'bg-yellow-100', 'bg-yellow-950/20', 'bg-purple-50', 'bg-purple-100', 'bg-purple-950/20',
     // Border and radius
@@ -57,8 +57,11 @@ export default {
     // Space and sizing
     'space-y-1', 'space-y-2', 'space-y-4', 'space-y-6', 'space-y-8',
     'w-4', 'w-6', 'w-8', 'w-12', 'w-16', 'h-4', 'h-6', 'h-8', 'h-12', 'h-16',
-    // Sidebar and navigation
+    // Custom green theme classes (CRITICAL for deployment)
     'bg-green-primary', 'text-green-primary', 'bg-green-light',
+    // Ensure all green variants are included
+    'text-green-500', 'bg-green-500', 'bg-green-50', 'border-green-500',
+    'dark:text-green-500', 'dark:bg-green-500', 'dark:bg-green-50', 'dark:border-green-500',
     // Additional utility classes found in components
     'select-none', 'outline-none', 'focus:outline-none', 'focus:ring-2', 'focus:ring-ring',
     // Force include all CSS variables and theme-based classes
