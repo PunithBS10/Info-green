@@ -1,9 +1,9 @@
-// Country name mapping based on actual GeoJSON world map data
+// Country name mapping: OWID → GeoJSON names
 export const COUNTRY_NAME_MAPPING: Record<string, string> = {
-  // Direct mappings based on GeoJSON country names
-  'United States': 'United States of America',
-  'United Kingdom': 'United Kingdom', 
-  'Russia': 'Russia', // GeoJSON uses 'Russia', not 'Russian Federation'
+  // Key mappings based on actual GeoJSON country names
+  'United States': 'United States of America', // GeoJSON has full name
+  'United Kingdom': 'England', // GeoJSON uses 'England' not 'United Kingdom'
+  'Russia': 'Russia', // Direct match
   'Iran': 'Iran',
   'Venezuela': 'Venezuela',
   'Bolivia': 'Bolivia',
