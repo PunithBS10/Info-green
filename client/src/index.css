@@ -3,18 +3,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Force include essential component styles - production deployment fix */
+/* NETLIFY DEPLOYMENT FIX - Force Critical CSS Classes */
 @layer components {
-  /* Ensure critical Shadcn UI classes are never purged */
-  .force-bg-popover { @apply bg-popover; }
-  .force-text-popover-foreground { @apply text-popover-foreground; }
-  .force-bg-background { @apply bg-background; }
-  .force-text-foreground { @apply text-foreground; }
-  .force-bg-card { @apply bg-card; }
-  .force-text-card-foreground { @apply text-card-foreground; }
-  .force-bg-accent { @apply bg-accent; }
-  .force-text-accent-foreground { @apply text-accent-foreground; }
-  .force-border-border { @apply border-border; }
+  /* Force inclusion of essential UI classes to prevent purging on Netlify */
+  .force-deployment-classes {
+    /* Base colors - ensure inclusion */
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+    /* Interactive states */
+    @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+    /* Border and shadow */
+    @apply border-gray-200 dark:border-gray-700 shadow-md;
+    /* Utility classes that might get purged */
+    @apply rounded-md z-50 overflow-hidden;
+  }
+  
+  /* Ensure popover and other variable-based classes are included */
+  .force-bg-popover { background-color: hsl(var(--popover)) !important; }
+  .force-text-popover-foreground { color: hsl(var(--popover-foreground)) !important; }
+  .force-bg-background { background-color: hsl(var(--background)) !important; }
+  .force-text-foreground { color: hsl(var(--foreground)) !important; }
 }
 
 :root {
