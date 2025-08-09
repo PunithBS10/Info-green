@@ -28,6 +28,14 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
         const response = await fetch(worldMapUrl);
         const worldGeoJson = await response.json();
         
+        // Log all available country names in the GeoJSON for debugging
+        const geoCountries = worldGeoJson.features?.map((feature: any) => feature.properties?.NAME || feature.properties?.name).filter(Boolean) || [];
+        console.log('Available countries in GeoJSON:', geoCountries.sort());
+        
+        // Log OWID countries to compare
+        const owidCountries = data.map(d => d.country).sort();
+        console.log('OWID countries:', owidCountries.slice(0, 20)); // Show first 20
+        
         // Register the world map
         echarts.registerMap('world', worldGeoJson);
 
