@@ -3,70 +3,83 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CRITICAL: Force include essential styling classes for production deployment */
-.bg-green-50 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(240 253 244 / var(--tw-bg-opacity)); 
-}
+/* CRITICAL: Force include all UI component styles for production deployment */
 
-.bg-green-500 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity)); 
-}
+/* Essential component backgrounds */
+.bg-background { background-color: hsl(var(--background)) !important; }
+.bg-foreground { background-color: hsl(var(--foreground)) !important; }
+.bg-card { background-color: hsl(var(--card)) !important; }
+.bg-card-foreground { background-color: hsl(var(--card-foreground)) !important; }
+.bg-popover { background-color: hsl(var(--popover)) !important; }
+.bg-popover-foreground { background-color: hsl(var(--popover-foreground)) !important; }
+.bg-primary { background-color: hsl(var(--primary)) !important; }
+.bg-primary-foreground { background-color: hsl(var(--primary-foreground)) !important; }
+.bg-secondary { background-color: hsl(var(--secondary)) !important; }
+.bg-secondary-foreground { background-color: hsl(var(--secondary-foreground)) !important; }
+.bg-muted { background-color: hsl(var(--muted)) !important; }
+.bg-muted-foreground { background-color: hsl(var(--muted-foreground)) !important; }
+.bg-accent { background-color: hsl(var(--accent)) !important; }
+.bg-accent-foreground { background-color: hsl(var(--accent-foreground)) !important; }
+.bg-destructive { background-color: hsl(var(--destructive)) !important; }
+.bg-destructive-foreground { background-color: hsl(var(--destructive-foreground)) !important; }
+.bg-border { background-color: hsl(var(--border)) !important; }
+.bg-input { background-color: hsl(var(--input)) !important; }
+.bg-ring { background-color: hsl(var(--ring)) !important; }
 
-.bg-green-900 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(20 83 45 / var(--tw-bg-opacity)); 
-}
+/* Text colors */
+.text-background { color: hsl(var(--background)) !important; }
+.text-foreground { color: hsl(var(--foreground)) !important; }
+.text-card { color: hsl(var(--card)) !important; }
+.text-card-foreground { color: hsl(var(--card-foreground)) !important; }
+.text-popover { color: hsl(var(--popover)) !important; }
+.text-popover-foreground { color: hsl(var(--popover-foreground)) !important; }
+.text-primary { color: hsl(var(--primary)) !important; }
+.text-primary-foreground { color: hsl(var(--primary-foreground)) !important; }
+.text-secondary { color: hsl(var(--secondary)) !important; }
+.text-secondary-foreground { color: hsl(var(--secondary-foreground)) !important; }
+.text-muted { color: hsl(var(--muted)) !important; }
+.text-muted-foreground { color: hsl(var(--muted-foreground)) !important; }
+.text-accent { color: hsl(var(--accent)) !important; }
+.text-accent-foreground { color: hsl(var(--accent-foreground)) !important; }
+.text-destructive { color: hsl(var(--destructive)) !important; }
+.text-destructive-foreground { color: hsl(var(--destructive-foreground)) !important; }
 
-.bg-blue-50 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 246 255 / var(--tw-bg-opacity)); 
-}
+/* Border colors */
+.border-border { border-color: hsl(var(--border)) !important; }
+.border-input { border-color: hsl(var(--input)) !important; }
+.border-ring { border-color: hsl(var(--ring)) !important; }
 
-.bg-blue-900 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 58 138 / var(--tw-bg-opacity)); 
-}
+/* Green color overrides for branding */
+.bg-green-50 { background-color: rgb(240 253 244) !important; }
+.bg-green-500 { background-color: rgb(34 197 94) !important; }
+.bg-green-600 { background-color: rgb(22 163 74) !important; }
+.bg-green-900 { background-color: rgb(20 83 45) !important; }
+.text-green-400 { color: rgb(74 222 128) !important; }
+.text-green-500 { color: rgb(34 197 94) !important; }
+.text-green-600 { color: rgb(22 163 74) !important; }
 
-.bg-gray-50 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity)); 
-}
-
-.bg-gray-900 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity)); 
-}
-
-.bg-opacity-20 {
-  --tw-bg-opacity: 0.2;
-}
-
-.text-green-500 {
-  --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
-}
+/* Additional component backgrounds */
+.bg-blue-50 { background-color: rgb(239 246 255) !important; }
+.bg-blue-900 { background-color: rgb(30 58 138) !important; }
+.bg-gray-50 { background-color: rgb(249 250 251) !important; }
+.bg-gray-900 { background-color: rgb(17 24 39) !important; }
+.bg-opacity-20 { --tw-bg-opacity: 0.2 !important; }
 
 /* Dark mode overrides */
-.dark .dark\:bg-green-900 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(20 83 45 / var(--tw-bg-opacity)); 
-}
-
-.dark .dark\:bg-blue-900 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(30 58 138 / var(--tw-bg-opacity)); 
-}
-
-.dark .dark\:bg-gray-900 { 
-  --tw-bg-opacity: 1;
-  background-color: rgb(17 24 39 / var(--tw-bg-opacity)); 
-}
-
-.dark .dark\:bg-opacity-20 {
-  --tw-bg-opacity: 0.2;
-}
+.dark .dark\:bg-background { background-color: hsl(var(--background)) !important; }
+.dark .dark\:bg-foreground { background-color: hsl(var(--foreground)) !important; }
+.dark .dark\:bg-card { background-color: hsl(var(--card)) !important; }
+.dark .dark\:bg-popover { background-color: hsl(var(--popover)) !important; }
+.dark .dark\:bg-primary { background-color: hsl(var(--primary)) !important; }
+.dark .dark\:bg-secondary { background-color: hsl(var(--secondary)) !important; }
+.dark .dark\:bg-muted { background-color: hsl(var(--muted)) !important; }
+.dark .dark\:bg-accent { background-color: hsl(var(--accent)) !important; }
+.dark .dark\:bg-green-900 { background-color: rgb(20 83 45) !important; }
+.dark .dark\:bg-blue-900 { background-color: rgb(30 58 138) !important; }
+.dark .dark\:bg-gray-900 { background-color: rgb(17 24 39) !important; }
+.dark .dark\:bg-opacity-20 { --tw-bg-opacity: 0.2 !important; }
+.dark .dark\:text-green-400 { color: rgb(74 222 128) !important; }
+.dark .dark\:text-blue-400 { color: rgb(96 165 250) !important; }
 
 :root {
   --background: hsl(0 0% 100%);

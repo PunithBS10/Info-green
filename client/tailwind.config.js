@@ -71,8 +71,30 @@ export default {
     'dark:text-green-500', 'dark:bg-green-500', 'dark:bg-green-50', 'dark:border-green-500',
     // Additional utility classes found in components
     'select-none', 'outline-none', 'focus:outline-none', 'focus:ring-2', 'focus:ring-ring',
-    // Force include all CSS variables and theme-based classes
+    // CRITICAL: ALL Shadcn UI component classes - force include everything for deployment
     'bg-background', 'bg-foreground', 'bg-card', 'bg-card-foreground', 'bg-popover', 'bg-popover-foreground',
+    'bg-primary', 'bg-primary-foreground', 'bg-secondary', 'bg-secondary-foreground', 
+    'bg-muted', 'bg-muted-foreground', 'bg-accent', 'bg-accent-foreground',
+    'bg-destructive', 'bg-destructive-foreground', 'bg-border', 'bg-input', 'bg-ring',
+    // Text color variants for ALL UI colors
+    'text-background', 'text-foreground', 'text-card', 'text-card-foreground',
+    'text-popover', 'text-popover-foreground', 'text-primary', 'text-primary-foreground',
+    'text-secondary', 'text-secondary-foreground', 'text-muted', 'text-muted-foreground',
+    'text-accent', 'text-accent-foreground', 'text-destructive', 'text-destructive-foreground',
+    // Border colors for components  
+    'border-background', 'border-foreground', 'border-card', 'border-popover',
+    'border-primary', 'border-secondary', 'border-muted', 'border-accent',
+    'border-destructive', 'border-border', 'border-input', 'border-ring',
+    // Dark mode variants for ALL component classes
+    'dark:bg-background', 'dark:bg-foreground', 'dark:bg-card', 'dark:bg-card-foreground',
+    'dark:bg-popover', 'dark:bg-popover-foreground', 'dark:bg-primary', 'dark:bg-primary-foreground',
+    'dark:bg-secondary', 'dark:bg-secondary-foreground', 'dark:bg-muted', 'dark:bg-muted-foreground',
+    'dark:bg-accent', 'dark:bg-accent-foreground', 'dark:bg-destructive', 'dark:bg-destructive-foreground',
+    'dark:text-background', 'dark:text-foreground', 'dark:text-card', 'dark:text-card-foreground',
+    'dark:text-popover', 'dark:text-popover-foreground', 'dark:text-primary', 'dark:text-primary-foreground',
+    'dark:text-secondary', 'dark:text-secondary-foreground', 'dark:text-muted', 'dark:text-muted-foreground',
+    'dark:text-accent', 'dark:text-accent-foreground', 'dark:text-destructive', 'dark:text-destructive-foreground',
+    'dark:border-border', 'dark:border-input', 'dark:border-ring',
     'bg-primary', 'bg-primary-foreground', 'bg-secondary', 'bg-secondary-foreground', 
     'bg-muted', 'bg-muted-foreground', 'bg-accent', 'bg-accent-foreground',
     'text-background', 'text-foreground', 'text-card', 'text-card-foreground', 'text-popover', 'text-popover-foreground',
