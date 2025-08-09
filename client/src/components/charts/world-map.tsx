@@ -13,119 +13,144 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
   useEffect(() => {
     if (!chartRef.current || isLoading || !data || data.length === 0) return;
 
-    // Initialize ECharts
-    const echarts = (window as any).echarts;
-    if (!echarts) {
-      console.error('ECharts not loaded');
-      return;
-    }
+    // Load ECharts world map
+    const loadWorldMap = async () => {
+      const echarts = (window as any).echarts;
+      if (!echarts) {
+        console.error('ECharts not loaded');
+        return;
+      }
 
-    // Dispose previous instance
-    if (chartInstance.current) {
-      chartInstance.current.dispose();
-    }
+      try {
+        // Load world map GeoJSON data
+        const worldMapUrl = 'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson';
+        const response = await fetch(worldMapUrl);
+        const worldGeoJson = await response.json();
+        
+        // Register the world map
+        echarts.registerMap('world', worldGeoJson);
 
-    chartInstance.current = echarts.init(chartRef.current);
-
-    // Create a top countries bar chart instead of world map
-    const sortedData = data
-      .filter(d => d && d.latestValue !== null && d.latestValue !== undefined && d.country)
-      .sort((a, b) => (b.latestValue || 0) - (a.latestValue || 0))
-      .slice(0, 20); // Top 20 countries
-
-    const option = {
-      title: {
-        text: 'Top 20 Countries by Renewable Electricity Share',
-        left: 'center',
-        top: '5%',
-        textStyle: {
-          fontSize: 16,
-          fontWeight: 'normal',
-          color: '#374151'
+        // Dispose previous instance
+        if (chartInstance.current) {
+          chartInstance.current.dispose();
         }
-      },
-      tooltip: {
-        trigger: 'axis',
-        formatter: function(params: any) {
-          if (params && params.length > 0) {
-            const data = params[0];
-            return `${data.axisValue}<br/>Renewable: ${data.value?.toFixed(1) || '—'}%`;
+
+        chartInstance.current = echarts.init(chartRef.current);
+
+        // Prepare data for map
+        const mapData = data
+          .filter(d => d && d.latestValue !== null && d.latestValue !== undefined && d.country)
+          .map(d => ({
+            name: d.country,
+            value: d.latestValue,
+            year: d.latestYear || 2023,
+            rank: d.rank || 0
+          }));
+
+        const option = {
+          tooltip: {
+            trigger: 'item',
+            formatter: function(params: any) {
+              if (params.data && params.data.value !== undefined) {
+                return `${params.name}<br/>Renewable: ${params.data.value?.toFixed(1)}%<br/>Year: ${params.data.year}<br/>Global Rank: #${params.data.rank}`;
+              }
+              return `${params.name}<br/>No data available`;
+            }
+          },
+          visualMap: {
+            min: 0,
+            max: 100,
+            left: 'left',
+            top: 'bottom',
+            text: ['High', 'Low'],
+            calculable: true,
+            inRange: {
+              color: ['#f3f4f6', '#d1fae5', '#a7f3d0', '#6ee7b7', '#34d399', '#10b981', '#059669']
+            },
+            textStyle: {
+              color: '#6b7280'
+            }
+          },
+          series: [{
+            name: 'Renewable Electricity %',
+            type: 'map',
+            map: 'world',
+            roam: true,
+            data: mapData,
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 12
+              },
+              itemStyle: {
+                areaColor: '#059669',
+                borderColor: '#ffffff',
+                borderWidth: 2
+              }
+            },
+            itemStyle: {
+              borderColor: '#ffffff',
+              borderWidth: 0.5
+            },
+            label: {
+              show: false
+            }
+          }]
+        };
+
+        chartInstance.current.setOption(option);
+
+        // Handle resize
+        const handleResize = () => {
+          if (chartInstance.current) {
+            chartInstance.current.resize();
           }
-          return 'No data available';
-        }
-      },
-      grid: {
-        left: '20%',
-        right: '10%',
-        top: '20%',
-        bottom: '10%'
-      },
-      xAxis: {
-        type: 'value',
-        max: 100,
-        axisLabel: {
-          formatter: '{value}%',
-          color: '#6b7280'
-        },
-        axisLine: {
-          lineStyle: { color: '#e5e7eb' }
-        }
-      },
-      yAxis: {
-        type: 'category',
-        data: sortedData.map(d => d.country),
-        axisLabel: {
-          fontSize: 11,
-          color: '#6b7280'
-        },
-        axisLine: {
-          lineStyle: { color: '#e5e7eb' }
-        }
-      },
-      series: [{
-        name: 'Renewable Electricity %',
-        type: 'bar',
-        data: sortedData.map(d => d.latestValue),
-        itemStyle: {
-          color: function(params: any) {
-            const value = params.value;
-            if (value >= 80) return '#059669';
-            if (value >= 60) return '#10b981';
-            if (value >= 40) return '#34d399';
-            if (value >= 20) return '#6ee7b7';
-            return '#a7f3d0';
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup function
+        return () => {
+          window.removeEventListener('resize', handleResize);
+          if (chartInstance.current) {
+            chartInstance.current.dispose();
           }
-        },
-        barMaxWidth: 20
-      }]
-    };
+        };
 
-    chartInstance.current.setOption(option);
-
-    // Handle resize
-    const handleResize = () => {
-      if (chartInstance.current) {
-        chartInstance.current.resize();
+      } catch (error) {
+        console.error('Failed to load world map:', error);
+        // Fallback to a simple text display
+        if (chartRef.current) {
+          chartRef.current.innerHTML = `
+            <div class="h-full w-full flex flex-col items-center justify-center text-gray-500">
+              <div class="text-lg font-medium mb-2">World Map</div>
+              <div class="text-sm">Map data loading failed</div>
+              <div class="text-xs mt-4">Top countries with renewable electricity:</div>
+              <div class="mt-2 space-y-1">
+                ${data.slice(0, 5).map(d => 
+                  `<div class="text-xs">${d.country}: ${d.latestValue?.toFixed(1)}%</div>`
+                ).join('')}
+              </div>
+            </div>
+          `;
+        }
       }
     };
 
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (chartInstance.current) {
-        chartInstance.current.dispose();
-      }
-    };
+    loadWorldMap();
   }, [data, isLoading]);
 
   if (isLoading) {
     return (
       <div className="h-[400px] flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg">
-        <div className="text-muted-foreground">Loading chart...</div>
+        <div className="text-muted-foreground">Loading world map...</div>
       </div>
     );
   }
 
-  return <div ref={chartRef} className="h-[400px] w-full" />;
+  return (
+    <div className="w-full">
+      <div ref={chartRef} className="h-[400px] w-full" />
+    </div>
+  );
 }
