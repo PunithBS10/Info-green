@@ -14,7 +14,6 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
-    cssCodeSplit: false,
     rollupOptions: {
       output: {
         manualChunks: {

@@ -3,29 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* CSS VARIABLE FALLBACK SYSTEM - Works in both dev and production */
-@layer utilities {
-  /* Target select content with CSS attribute selector */
-  .select-content {
-    /* CSS variables work in dev, fallback works in production */
-    background: hsl(var(--popover, 0 0% 100%)) !important;
-    color: hsl(var(--popover-foreground, 224 71.4% 4.1%)) !important;
-  }
-  
-  .dark .select-content {
-    background: hsl(var(--popover, 224 71.4% 4.1%)) !important; 
-    color: hsl(var(--popover-foreground, 210 20% 98%)) !important;
-  }
-}
 
-@layer components {
-  /* Force include critical classes for deployment */
-  .deployment-safeguard {
-    @apply bg-popover text-popover-foreground bg-background text-foreground;
-    @apply bg-card text-card-foreground bg-accent text-accent-foreground;
-    @apply border-border shadow-md rounded-md z-50;
-  }
-}
 
 :root {
   --background: hsl(0 0% 100%);
