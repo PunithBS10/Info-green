@@ -65,7 +65,7 @@ export function CountryDetailModal({ isOpen, onClose, countryName }: CountryDeta
             
             {/* Key Metrics */}
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg text-center">
+              <div className="bg-green-50 dark:bg-green-900 dark:bg-opacity-20 p-4 rounded-lg text-center">
                 <div className="text-sm text-muted-foreground mb-1">Current</div>
                 <div className="text-2xl font-bold text-green-600 dark:text-green-400">
                   {countryDetail.currentPercentage.toFixed(1)}%
@@ -73,7 +73,7 @@ export function CountryDetailModal({ isOpen, onClose, countryName }: CountryDeta
                 <div className="text-xs text-muted-foreground">{countryDetail.countryInfo.yearRange.end}</div>
               </div>
               
-              <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg text-center">
+              <div className="bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 p-4 rounded-lg text-center">
                 <div className="text-sm text-muted-foreground mb-1">15-Year Avg</div>
                 <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                   {countryDetail.fifteenYearAverage.toFixed(1)}%
@@ -81,7 +81,7 @@ export function CountryDetailModal({ isOpen, onClose, countryName }: CountryDeta
                 <div className="text-xs text-muted-foreground">2008-2023</div>
               </div>
               
-              <div className="bg-gray-50 dark:bg-gray-950/20 p-4 rounded-lg text-center">
+              <div className="bg-gray-50 dark:bg-gray-900 dark:bg-opacity-20 p-4 rounded-lg text-center">
                 <div className="text-sm text-muted-foreground mb-1">Change</div>
                 <div className="text-2xl font-bold">
                   {countryDetail.changeVs2008 >= 0 ? '+' : ''}{countryDetail.changeVs2008.toFixed(1)}%

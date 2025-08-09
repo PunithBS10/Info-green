@@ -180,7 +180,7 @@ export default function Countries() {
                     topPerformers.map((country, index) => (
                       <div key={country.country} className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
-                          <span className="flex-shrink-0 w-6 h-6 bg-primary text-white text-xs font-bold rounded-full flex items-center justify-center">
+                          <span className="flex-shrink-0 w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
                             #{index + 1}
                           </span>
                           <div>
