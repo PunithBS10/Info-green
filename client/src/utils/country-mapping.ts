@@ -1,44 +1,48 @@
-// Country name mapping to match OWID data with world map GeoJSON
+// Country name mapping based on actual GeoJSON world map data
 export const COUNTRY_NAME_MAPPING: Record<string, string> = {
-  // Common country name variations
+  // Direct mappings based on GeoJSON country names
   'United States': 'United States of America',
-  'United Kingdom': 'United Kingdom',
-  'Russia': 'Russian Federation',
+  'United Kingdom': 'United Kingdom', 
+  'Russia': 'Russia', // GeoJSON uses 'Russia', not 'Russian Federation'
   'Iran': 'Iran',
   'Venezuela': 'Venezuela',
   'Bolivia': 'Bolivia',
-  'Tanzania': 'United Republic of Tanzania',
-  'Syria': 'Syrian Arab Republic',
-  'Laos': "Lao People's Democratic Republic",
-  'North Korea': "Democratic People's Republic of Korea",
-  'South Korea': 'Republic of Korea',
-  'Moldova': 'Republic of Moldova',
-  'Macedonia': 'North Macedonia',
-  'Congo': 'Republic of the Congo',
+  'Tanzania': 'Tanzania', // GeoJSON uses 'Tanzania'
+  'Syria': 'Syria', // GeoJSON uses 'Syria' 
+  'Laos': 'Laos', // GeoJSON uses 'Laos'
+  'North Korea': 'North Korea', // GeoJSON uses 'North Korea'
+  'South Korea': 'South Korea', // GeoJSON uses 'South Korea'
+  'Moldova': 'Moldova', // GeoJSON uses 'Moldova'
+  'Macedonia': 'Macedonia', // GeoJSON uses 'Macedonia'
+  'Congo': 'Republic of Congo', // GeoJSON variation
   'Democratic Republic of Congo': 'Democratic Republic of the Congo',
   'Central African Republic': 'Central African Republic',
-  'Cote d\'Ivoire': 'Côte d\'Ivoire',
-  'Ivory Coast': 'Côte d\'Ivoire',
-  'Brunei': 'Brunei Darussalam',
+  'Cote d\'Ivoire': 'Ivory Coast', // GeoJSON uses 'Ivory Coast'
+  'Ivory Coast': 'Ivory Coast',
+  'Brunei': 'Brunei',
   'East Timor': 'East Timor',
   'Timor': 'East Timor',
-  'Swaziland': 'Eswatini',
-  'Eswatini': 'Eswatini',
+  'Timor-Leste': 'East Timor',
+  'Swaziland': 'Swaziland', // Check if GeoJSON uses this
+  'Eswatini': 'Swaziland',
   'Myanmar': 'Myanmar',
   'Burma': 'Myanmar',
   'Cape Verde': 'Cape Verde',
-  'Gambia': 'The Gambia',
-  'Bahamas': 'The Bahamas',
-  'Vatican': 'Vatican City',
-  'Micronesia (country)': 'Federated States of Micronesia',
+  'Gambia': 'Gambia', // GeoJSON uses 'Gambia'
+  'Bahamas': 'Bahamas', // GeoJSON uses 'Bahamas'
+  'Vatican': 'Vatican',
+  'Micronesia (country)': 'Micronesia',
   'Palestine': 'Palestine',
   'Taiwan': 'Taiwan',
   'Serbia': 'Serbia',
   'Montenegro': 'Montenegro',
   'Kosovo': 'Kosovo',
   'South Sudan': 'South Sudan',
+  'Czech Republic': 'Czech Republic',
+  'Slovakia': 'Slovakia',
+  'Bosnia and Herzegovina': 'Bosnia and Herzegovina',
   
-  // Additional mappings for common variations
+  // Additional common variations
   'USA': 'United States of America',
   'UK': 'United Kingdom',
   'UAE': 'United Arab Emirates',

@@ -67,6 +67,19 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
           });
 
         console.log(`Preparing map data for ${mapData.length} countries with renewable data`);
+        
+        // Log countries that might not match for debugging
+        const unmatchedOWID = data
+          .filter(d => d && d.latestValue !== null)
+          .map(d => d.country)
+          .filter(country => {
+            const mapped = mapOWIDToGeoName(country);
+            return !geoCountries.includes(mapped);
+          });
+        
+        if (unmatchedOWID.length > 0) {
+          console.log('OWID countries not found in GeoJSON (first 10):', unmatchedOWID.slice(0, 10));
+        }
 
         const option = {
           tooltip: {
