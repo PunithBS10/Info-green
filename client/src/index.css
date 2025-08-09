@@ -119,19 +119,14 @@
 
 @layer utilities {
   .text-green-primary {
-    color: var(--green-500) !important;
+    color: hsl(var(--green-500));
   }
   
   .bg-green-primary {
-    background-color: var(--green-500) !important;
+    background-color: hsl(var(--green-500));
   }
   
   .bg-green-light {
-    background-color: var(--green-50) !important;
+    background-color: hsl(var(--green-50));
   }
-}
-
-/* Force include key green theme classes for deployment */
-.text-green-primary, .bg-green-primary, .bg-green-light {
-  /* Ensure these classes are never purged */
 }

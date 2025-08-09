@@ -7,8 +7,12 @@ This is a Global Renewable Electricity Dashboard that visualizes renewable elect
 - Base directory: `client`
 - Build command: `npm run build` (or leave empty)
 - Publish directory: `dist`
-- Tailwind CSS optimized for production with comprehensive safelist
-- All styling issues resolved for deployment environments
+- **DEPLOYMENT STYLING ISSUES RESOLVED** (January 2025):
+  - Fixed conflicting Tailwind configs (unified to single client/tailwind.config.js)
+  - Wrapped all color variables with hsl() for opacity modifier support (bg-background/80 works)
+  - Added comprehensive safelist including all Shadcn UI component classes
+  - Removed fragile manual CSS workarounds, using proper Tailwind layers
+  - Production CSS optimized with essential classes guaranteed in build
 
 # User Preferences
 
