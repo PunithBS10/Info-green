@@ -13,6 +13,9 @@ export default {
     'bg-popover', 'text-popover-foreground', 'bg-primary', 'text-primary-foreground',
     'bg-secondary', 'text-secondary-foreground', 'bg-muted', 'text-muted-foreground',
     'bg-accent', 'text-accent-foreground', 'border-border',
+    // ADDITIONAL CRITICAL UI STATES for dropdowns/modals
+    'focus:bg-accent', 'focus:text-accent-foreground', 'shadow-md', 'z-50',
+    'rounded-md', 'border', 'overflow-hidden', 'overflow-y-auto',
     // Custom green theme classes
     'text-green-primary', 'bg-green-primary', 'bg-green-light',
     // Color variants used in KPI cards

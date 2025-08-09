@@ -5,15 +5,16 @@
 
 /* Force include essential component styles - production deployment fix */
 @layer components {
-  .dropdown-content {
-    @apply bg-popover text-popover-foreground border border-border shadow-md;
-  }
-  .modal-overlay {
-    @apply bg-background text-foreground;
-  }
-  .card-component {
-    @apply bg-card text-card-foreground border border-border;
-  }
+  /* Ensure critical Shadcn UI classes are never purged */
+  .force-bg-popover { @apply bg-popover; }
+  .force-text-popover-foreground { @apply text-popover-foreground; }
+  .force-bg-background { @apply bg-background; }
+  .force-text-foreground { @apply text-foreground; }
+  .force-bg-card { @apply bg-card; }
+  .force-text-card-foreground { @apply text-card-foreground; }
+  .force-bg-accent { @apply bg-accent; }
+  .force-text-accent-foreground { @apply text-accent-foreground; }
+  .force-border-border { @apply border-border; }
 }
 
 :root {
