@@ -32,6 +32,14 @@ export function WorldMap({ data, isLoading = false }: WorldMapProps) {
         const geoCountries = worldGeoJson.features?.map((feature: any) => feature.properties?.NAME || feature.properties?.name).filter(Boolean) || [];
         console.log('Available countries in GeoJSON:', geoCountries.sort());
         
+        // Check specific countries in GeoJSON
+        const hasUSInGeo = geoCountries.find(c => c.toLowerCase().includes('united states'));
+        const hasUKInGeo = geoCountries.find(c => c.toLowerCase().includes('united kingdom'));
+        const hasRussiaInGeo = geoCountries.find(c => c.toLowerCase().includes('russia'));
+        console.log('US in GeoJSON:', hasUSInGeo);
+        console.log('UK in GeoJSON:', hasUKInGeo);
+        console.log('Russia in GeoJSON:', hasRussiaInGeo);
+        
         // Log OWID countries to compare  
         const owidCountries = data.map(d => d.country).sort();
         console.log('OWID countries:', owidCountries.slice(0, 20)); // Show first 20
